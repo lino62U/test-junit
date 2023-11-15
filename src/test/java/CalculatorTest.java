@@ -2,20 +2,18 @@ import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
 public class CalculatorTest {
-
-    private static WebDriver driver;  // Cambiar a estático
+    private static WebDriver driver;
 
     @BeforeClass
     public static void setUpClass() {
         // Configurar el WebDriver antes de todas las pruebas
         // Se ejecuta solo una vez
-        
+
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.navigate().to("http://www.calculator.net/");
@@ -73,6 +71,24 @@ public class CalculatorTest {
 
         // assert the value of result
         assertEquals("10", result);
+    }
+
+    @Test
+    public void testErrorForzado() {
+        // Enter value 10 in the first number of the percent Calculator
+        driver.findElement(By.id("cpar1")).sendKeys("10");
+
+        // Enter value 50 in the second number of the percent Calculator
+        driver.findElement(By.id("cpar2")).sendKeys("100");
+
+        // Click Calculate Button
+        driver.findElement(By.xpath("//*[@id=\"content\"]/form[1]/table/tbody/tr[2]/td/input[2]")).click();
+
+        // Get the Result Text based on its xpath
+        String result = driver.findElement(By.xpath("//*[@id=\"content\"]/p[2]/font/b")).getText();
+
+        // assert the value of result
+        assertEquals("100", result);
     }
 
     @After
