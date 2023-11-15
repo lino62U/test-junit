@@ -38,7 +38,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testPercentCalculator() {
+    public void valoresPositivos() {
         // Enter value 10 in the first number of the percent Calculator
         driver.findElement(By.id("cpar1")).sendKeys("10");
 
@@ -56,9 +56,9 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testOtroCaso() {
+    public void valoresMixtos() {
         // Enter value 10 in the first number of the percent Calculator
-        driver.findElement(By.id("cpar1")).sendKeys("10");
+        driver.findElement(By.id("cpar1")).sendKeys("-10");
 
         // Enter value 50 in the second number of the percent Calculator
         driver.findElement(By.id("cpar2")).sendKeys("100");
@@ -70,13 +70,13 @@ public class CalculatorTest {
         String result = driver.findElement(By.xpath("//*[@id=\"content\"]/p[2]/font/b")).getText();
 
         // assert the value of result
-        assertEquals("10", result);
+        assertEquals("-10", result);
     }
 
     @Test
-    public void testErrorForzado() {
+    public void entradaNoEntera() {
         // Enter value 10 in the first number of the percent Calculator
-        driver.findElement(By.id("cpar1")).sendKeys("10");
+        driver.findElement(By.id("cpar1")).sendKeys("a");
 
         // Enter value 50 in the second number of the percent Calculator
         driver.findElement(By.id("cpar2")).sendKeys("100");
@@ -85,10 +85,10 @@ public class CalculatorTest {
         driver.findElement(By.xpath("//*[@id=\"content\"]/form[1]/table/tbody/tr[2]/td/input[2]")).click();
 
         // Get the Result Text based on its xpath
-        String result = driver.findElement(By.xpath("//*[@id=\"content\"]/p[2]/font/b")).getText();
+        String result = driver.findElement(By.xpath("//*[@id=\"content\"]/p[2]/font")).getText();
 
         // assert the value of result
-        assertEquals("100", result);
+        assertEquals("Please provide two numeric values in any fields below.", result);
     }
 
     @After
